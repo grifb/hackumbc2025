@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://cbu5pvd6vfm28"]
 
-[ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
-[ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
-[ext_resource type="Script" uid="uid://cpi4veape7d46" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
+[ext_resource type="PackedScene" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
+[ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -18,18 +18,10 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
-<<<<<<< Updated upstream
-size = Vector3(10, 0.01, 10)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
-size = Vector3(10, 0.01, 10)
-=======
-material = SubResource("StandardMaterial3D_lquwl")
 size = Vector3(200, 1, 200)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
 size = Vector3(200, 1, 200)
->>>>>>> Stashed changes
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
 bg_color = Color(0, 0, 0, 0.39215687)
@@ -46,10 +38,6 @@ shadow_enabled = true
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-<<<<<<< Updated upstream
-transform = Transform3D(0.999983, 0, -0.005829367, 0, 1, 0, 0.005829367, 0, 0.999983, 0, 0, 0)
-=======
->>>>>>> Stashed changes
 mesh = SubResource("BoxMesh_7dm0k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
