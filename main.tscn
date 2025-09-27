@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cbu5pvd6vfm28"]
+[gd_scene load_steps=10 format=3 uid="uid://cbu5pvd6vfm28"]
 
-[ext_resource type="PackedScene" path="res://player.tscn" id="1_ig7tw"]
-[ext_resource type="Script" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
-[ext_resource type="Script" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://cpi4veape7d46" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -16,11 +16,6 @@ background_mode = 2
 sky = SubResource("Sky_ig7tw")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
-albedo_texture = ExtResource("1_1bvp3")
-uv1_scale = Vector3(1.48, 1.48, 1.48)
-uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
 size = Vector3(200, 1, 200)
@@ -46,7 +41,6 @@ shadow_enabled = true
 mesh = SubResource("BoxMesh_7dm0k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, 0, 0, 0)
 shape = SubResource("BoxShape3D_ig7tw")
 
 [node name="Player" parent="." node_paths=PackedStringArray("pauseMenu") instance=ExtResource("1_ig7tw")]
