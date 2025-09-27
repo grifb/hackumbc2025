@@ -28,7 +28,7 @@ material = SubResource("StandardMaterial3D_lquwl")
 size = Vector3(10, 0.01, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
-size = Vector3(10, 0.01, 10)
+size = Vector3(100, 0.01, 100)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
 bg_color = Color(0, 0, 0, 0.39215687)
