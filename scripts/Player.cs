@@ -1,4 +1,5 @@
 using Godot;
+using System.Collections.Generic;
 
 namespace Game;
 
@@ -7,6 +8,7 @@ public partial class Player : CharacterBody3D
     private Node3D cameraPivot;
     private Camera3D camera;
     private SpringArm3D springArm;
+    private Label3D spellLabel;
     [Export] private CanvasLayer pauseMenu;
     private readonly float Gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
     [Export(PropertyHint.Range, "0,180,radians_as_degrees")] private float TiltAboveMax = Mathf.DegToRad(75f);
@@ -16,12 +18,16 @@ public partial class Player : CharacterBody3D
     [Export] private float JumpForce = 50f;
     [Export] private float Mass = 50f;
     [Export] private float MouseSensitivity = 0.01f;
+    private bool castingSpell = false;
+    private string currentSpell = "";
+    private SceneTreeTimer clearLabelTimer = null;
 
     public override void _Ready()
     {
         cameraPivot = GetNode<Node3D>("CameraPivot");
         springArm = cameraPivot.GetNode<SpringArm3D>("SpringArm3D");
         camera = springArm.GetNode<Camera3D>("Camera3D");
+        spellLabel = GetNode<Label3D>("SpellLabel");
 
         springArm.AddExcludedObject(GetRid());
 
@@ -32,6 +38,45 @@ public partial class Player : CharacterBody3D
 
     public override void _UnhandledInput(InputEvent ev)
     {
+        if (ev is InputEventMouseButton mouseClickEvent && mouseClickEvent.ButtonIndex == MouseButton.Right)
+        {
+            if (mouseClickEvent.Pressed)
+            {
+                spellLabel.Modulate = Colors.White;
+                spellLabel.Text = "";
+                currentSpell = "";
+                castingSpell = true;
+            }
+            else
+            {
+                castingSpell = false;
+                spellLabel.Text = "";
+
+                var spell = SpellManager.Instance.GetSpell(currentSpell);
+
+                if (spell == "Invalid")
+                {
+                    clearLabelTimer?.Dispose();
+                    spellLabel.Modulate = Colors.DarkSlateGray;
+                    spellLabel.Text = "You cast like a raging barbarian";
+                }
+                else
+                {
+                    spellLabel.Modulate = Colors.LimeGreen;
+                    spellLabel.Text = spell;
+                }
+
+                clearLabelTimer = GetTree().CreateTimer(3.0f);
+
+                clearLabelTimer.Timeout += () => {
+                    if (castingSpell == false) {
+                        spellLabel.Modulate = Colors.White;
+                        spellLabel.Text = "";
+                    }
+                };
+            }
+        }
+
         if (ev is InputEventMouseMotion mouseEvent)
         {
             var xRotation = cameraPivot.Rotation.X - mouseEvent.Relative.Y * MouseSensitivity;
@@ -63,6 +108,12 @@ public partial class Player : CharacterBody3D
             velocity.Y = JumpForce;
         }
 
+        if (castingSpell == true)
+        {
+            velocity = Vector3.Zero;
+            CaptureSpellInputs();
+        }
+
         Velocity = velocity;
         MoveAndSlide();
 
@@ -71,6 +122,30 @@ public partial class Player : CharacterBody3D
             Input.MouseMode = Input.MouseModeEnum.Visible;
             GetTree().Paused = true;
             pauseMenu.Visible = true;
+        }
+    }
+
+    private void CaptureSpellInputs()
+    {
+        if (Input.IsActionJustPressed("Up"))
+        {
+            currentSpell += "Up";
+            spellLabel.Text += "Up ";
+        }
+        else if (Input.IsActionJustPressed("Down"))
+        {
+            currentSpell += "Down";
+            spellLabel.Text += "Down ";
+        }
+        else if (Input.IsActionJustPressed("Left"))
+        {
+            currentSpell += "Left";
+            spellLabel.Text += "Left ";
+        }
+        else if (Input.IsActionJustPressed("Right"))
+        {
+            currentSpell += "Right";
+            spellLabel.Text += "Right ";
         }
     }
 }

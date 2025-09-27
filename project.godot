@@ -15,6 +15,10 @@ run/main_scene="uid://cbu5pvd6vfm28"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SpellManager="res://scripts/SpellManager.cs"
+
 [display]
 
 window/size/viewport_width=1920
