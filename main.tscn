@@ -18,10 +18,18 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+<<<<<<< Updated upstream
 size = Vector3(10, 0.01, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
 size = Vector3(10, 0.01, 10)
+=======
+material = SubResource("StandardMaterial3D_lquwl")
+size = Vector3(200, 1, 200)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
+size = Vector3(200, 1, 200)
+>>>>>>> Stashed changes
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
 bg_color = Color(0, 0, 0, 0.39215687)
@@ -38,7 +46,10 @@ shadow_enabled = true
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+<<<<<<< Updated upstream
 transform = Transform3D(0.999983, 0, -0.005829367, 0, 1, 0, 0.005829367, 0, 0.999983, 0, 0, 0)
+=======
+>>>>>>> Stashed changes
 mesh = SubResource("BoxMesh_7dm0k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
