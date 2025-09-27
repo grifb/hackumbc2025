@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbu5pvd6vfm28"]
+[gd_scene load_steps=11 format=3 uid="uid://cbu5pvd6vfm28"]
 
 [ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
@@ -17,11 +17,16 @@ sky = SubResource("Sky_ig7tw")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h2yge"]
+albedo_color = Color(0.57916313, 0.18529555, 0.0064764256, 1)
+metallic = 1.0
+
 [sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
-size = Vector3(10, 0.01, 10)
+material = SubResource("StandardMaterial3D_h2yge")
+size = Vector3(100, 0.01, 100)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
-size = Vector3(10, 0.01, 10)
+size = Vector3(100, 0.01, 100)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
 bg_color = Color(0, 0, 0, 0.39215687)
