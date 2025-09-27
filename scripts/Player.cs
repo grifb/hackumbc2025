@@ -6,6 +6,7 @@ public partial class Player : CharacterBody3D
 {
     private Node3D cameraPivot;
     private Camera3D camera;
+    private SpringArm3D springArm;
     [Export] private CanvasLayer pauseMenu;
     private readonly float Gravity = (float)ProjectSettings.GetSetting("physics/3d/default_gravity");
     [Export(PropertyHint.Range, "0,180,radians_as_degrees")] private float TiltAboveMax = Mathf.DegToRad(75f);
@@ -18,7 +19,10 @@ public partial class Player : CharacterBody3D
     public override void _Ready()
     {
         cameraPivot = GetNode<Node3D>("CameraPivot");
-        camera = cameraPivot.GetNode<Camera3D>("SpringArm3D/Camera3D");
+        springArm = cameraPivot.GetNode<SpringArm3D>("SpringArm3D");
+        camera = springArm.GetNode<Camera3D>("Camera3D");
+
+        springArm.AddExcludedObject(GetRid());
 
         if (camera.Current) {
             Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -49,7 +53,7 @@ public partial class Player : CharacterBody3D
         {
             velocity.Y = Velocity.Y - Mass * Gravity * (float)delta;
         }
-        else if (Input.IsActionJustPressed("Jump"))
+        else if (Input.IsActionPressed("Jump"))
         {
             velocity.Y = JumpForce;
         }
