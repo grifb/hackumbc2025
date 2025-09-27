@@ -43,6 +43,7 @@ shadow_enabled = true
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(0.999983, 0, -0.005829367, 0, 1, 0, 0.005829367, 0, 0.999983, 0, 0, 0)
 mesh = SubResource("BoxMesh_7dm0k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
@@ -54,7 +55,6 @@ pauseMenu = NodePath("../PauseMenu")
 
 [node name="DebugUI" type="CanvasLayer" parent="."]
 layer = 9999
-visible = false
 script = ExtResource("2_0xm2m")
 
 [node name="FPS" type="Label" parent="DebugUI"]
