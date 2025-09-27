@@ -1,3 +1,110 @@
-[gd_scene format=3 uid="uid://cbu5pvd6vfm28"]
+[gd_scene load_steps=10 format=3 uid="uid://cbu5pvd6vfm28"]
+
+[ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://cpi4veape7d46" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+size = Vector3(10, 0.01, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
+size = Vector3(10, 0.01, 10)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
+bg_color = Color(0, 0, 0, 0.39215687)
 
 [node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("BoxMesh_7dm0k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_ig7tw")
+
+[node name="Player" parent="." node_paths=PackedStringArray("pauseMenu") instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+pauseMenu = NodePath("../PauseMenu")
+
+[node name="DebugUI" type="CanvasLayer" parent="."]
+layer = 9999
+visible = false
+script = ExtResource("2_0xm2m")
+
+[node name="FPS" type="Label" parent="DebugUI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 119.0
+offset_bottom = 89.0
+theme_override_colors/font_color = Color(0.98835546, 0.14733115, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "FPS:"
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 2
+visible = false
+script = ExtResource("3_h2yge")
+
+[node name="Background" type="Panel" parent="PauseMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0xm2m")
+
+[node name="Menu" type="VBoxContainer" parent="PauseMenu/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="PauseMenu/Background/Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Resume"
+
+[node name="Quit" type="Button" parent="PauseMenu/Background/Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+
+[node name="Title" type="Label" parent="PauseMenu/Background"]
+layout_mode = 0
+offset_left = 859.5
+offset_top = 228.5
+offset_right = 1060.5
+offset_bottom = 297.5
+theme_override_font_sizes/font_size = 50
+text = "Paused"
+horizontal_alignment = 1
