@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbu5pvd6vfm28"]
+[gd_scene load_steps=12 format=3 uid="uid://cbu5pvd6vfm28"]
 
+[ext_resource type="Texture2D" uid="uid://ck8syckyrru8x" path="res://Checkerboard_pattern.svg.png" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://cpi4veape7d46" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
@@ -17,7 +18,13 @@ sky = SubResource("Sky_ig7tw")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+albedo_texture = ExtResource("1_1bvp3")
+uv1_scale = Vector3(1.48, 1.48, 1.48)
+uv1_triplanar = true
+
 [sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+material = SubResource("StandardMaterial3D_lquwl")
 size = Vector3(10, 0.01, 10)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
@@ -38,9 +45,11 @@ shadow_enabled = true
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(200.0562, 0, 0, 0, 2.8347964, 0, 0, 0, 200.0562, 0, 0, 0)
 mesh = SubResource("BoxMesh_7dm0k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+transform = Transform3D(200, 0, 0, 0, 1, 0, 0, 0, 200, 0, 0, 0)
 shape = SubResource("BoxShape3D_ig7tw")
 
 [node name="Player" parent="." node_paths=PackedStringArray("pauseMenu") instance=ExtResource("1_ig7tw")]
@@ -49,7 +58,6 @@ pauseMenu = NodePath("../PauseMenu")
 
 [node name="DebugUI" type="CanvasLayer" parent="."]
 layer = 9999
-visible = false
 script = ExtResource("2_0xm2m")
 
 [node name="FPS" type="Label" parent="DebugUI"]
@@ -60,6 +68,15 @@ offset_bottom = 89.0
 theme_override_colors/font_color = Color(0.98835546, 0.14733115, 0, 1)
 theme_override_font_sizes/font_size = 50
 text = "FPS:"
+
+[node name="Velocity" type="Label" parent="DebugUI"]
+offset_left = 20.0
+offset_top = 81.0
+offset_right = 119.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(0.98835546, 0.14733115, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Velocity:"
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
 process_mode = 2
