@@ -16,7 +16,6 @@ public partial class Player : CharacterBody3D
 	[Export(PropertyHint.Range, "0,180,radians_as_degrees")] private float TiltBelowMax = Mathf.DegToRad(50);
 	[Export] private float MoveSpeed = 10f;
 <<<<<<< Updated upstream
-	[Export] private float SprintMultiplier = 1.15f;
 =======
 	[Export] private float SprintSpeed = 60f;
 >>>>>>> Stashed changes
