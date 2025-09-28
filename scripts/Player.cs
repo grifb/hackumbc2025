@@ -72,6 +72,14 @@ public partial class Player : CharacterBody3D
                     spawn.Y = GlobalPosition.Y;
                     SpellManager.Instance.Fireball(camera.GlobalRotation, spawn);
                 }
+                else if (spell == "Shield")
+                {
+                    spellLabel.Modulate = Colors.LimeGreen;
+                    spellLabel.Text = spell;
+
+                    
+                    SpellManager.Instance.Shield(this);
+                }
 
                 else
                 {

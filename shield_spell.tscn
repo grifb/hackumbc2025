@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://bm1blpqufko4m"]
+
+[ext_resource type="Script" uid="uid://b1ie727u6dmj3" path="res://scripts/Shield.cs" id="1_uupdp"]
+[ext_resource type="ArrayMesh" uid="uid://dbx2llclc4mql" path="res://shield dome.res" id="2_dkq0o"]
+[ext_resource type="Shader" uid="uid://vd345px3wo32" path="res://shield_spell.tres" id="2_vceqx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hr2up"]
+render_priority = 0
+shader = ExtResource("2_vceqx")
+shader_parameter/ColorParameter = Color(0, 1.0642196, 1.12312, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uupdp"]
+size = Vector3(0.147, 1.695, 1.984)
+
+[node name="shield_spell" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0)
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_uupdp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(100, 0, 0, 0, 99.99999, 0, 0, 0, 215.08813, 0, 3.2441584e-08, -0.7421769)
+material_override = SubResource("ShaderMaterial_hr2up")
+mesh = ExtResource("2_dkq0o")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.81233346, 0, 0.4595337)
+shape = SubResource("BoxShape3D_uupdp")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.88012826, 0, 0.4595337)
+shape = SubResource("BoxShape3D_uupdp")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.3711392e-08, -1, -4.3711385e-08, 1, -4.371139e-08, -4.3711392e-08, 4.371139e-08, -4.371139e-08, 1, 0, 0.89726365, 0.46000004)
+shape = SubResource("BoxShape3D_uupdp")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.3711392e-08, -1, -4.3711385e-08, 1, -4.371139e-08, -4.3711392e-08, 4.371139e-08, -4.371139e-08, 1, 0, -0.88738453, 0.45999998)
+shape = SubResource("BoxShape3D_uupdp")

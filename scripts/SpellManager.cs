@@ -61,6 +61,12 @@ public partial class SpellManager : Node
 				SpellInput.Up
 			],
 			Spell.Fireball
+		}, { 
+			[
+				SpellInput.Down,
+				SpellInput.Down
+			],
+			Spell.Shield
 		}
 	};
 
@@ -119,10 +125,21 @@ public partial class SpellManager : Node
 		fireballSpellActual.setPosition(position);
 		fireballSpellActual.setRotation(direction);
 		fireballSpellActual.Launch(50);
+	}
 
-		
-		
+	public void Shield(Player player)
+	{
+		var shield = GD.Load<PackedScene>("res://shield_spell.tscn");
+		Debug.Print("Shield loaded");
+		Node shield_node = shield.Instantiate();
+		GetTree().Root.AddChild(shield_node);
 
+		Debug.Print("Shield instantiated");
+		Shield shieldActual = (Shield)shield_node;
+		Debug.Print("Shield set");
+		Debug.Print("Shield name: {0}", shieldActual.Name);
+		shieldActual.Cast(player);
+		
 	}
 
 
