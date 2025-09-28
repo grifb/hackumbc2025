@@ -31,6 +31,11 @@ window/vsync/vsync_mode=0
 
 project/assembly_name="Game"
 
+[global_group]
+
+Player=""
+Enemies=""
+
 [input]
 
 Up={

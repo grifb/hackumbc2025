@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://dy5fpbujc571e"]
+
+[ext_resource type="Script" uid="uid://brr62gcnxog1p" path="res://scripts/JumpingNPC.cs" id="1_2d52u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vjne"]
+albedo_color = Color(0.6431373, 0, 0.043137256, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_h2yge"]
+material = SubResource("StandardMaterial3D_1vjne")
+radius = 1.5
+is_hemisphere = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2d52u"]
+size = Vector3(3, 1, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1vjne"]
+size = Vector3(2.5, 1, 2.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2d52u"]
+radius = 30.0
+
+[node name="Slime" type="CharacterBody3D" groups=["Enemies"]]
+script = ExtResource("1_2d52u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_h2yge")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_2d52u")
+
+[node name="Hitbox" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_1vjne")
+debug_color = Color(1, 0, 0, 0.41960785)
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
+[node name="TargetRadius" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TargetRadius"]
+shape = SubResource("SphereShape3D_2d52u")
+debug_color = Color(0.5464882, 0.086631455, 0.98232096, 0.41960785)
