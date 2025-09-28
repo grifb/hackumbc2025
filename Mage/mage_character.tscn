@@ -1,0 +1,98 @@
+[gd_scene load_steps=11 format=3 uid="uid://cx8aoyg8c65bq"]
+
+[ext_resource type="PackedScene" uid="uid://bxntigtm1pp0w" path="res://Mage/MageCharacter.blend" id="1_4224d"]
+[ext_resource type="Material" uid="uid://b2oj1c5yqnmp8" path="res://Mage/PlayerButtonBelt.tres" id="2_b2alh"]
+[ext_resource type="Material" uid="uid://b7s6k6opb7j6s" path="res://Mage/PlayerCloak.tres" id="3_7vn4n"]
+[ext_resource type="Shader" uid="uid://vn4156a3bp84" path="res://Mage/AllBlack.gdshader" id="3_b2alh"]
+[ext_resource type="Material" uid="uid://c70ovkjsxjwx1" path="res://Mage/PlayerHair.tres" id="4_4638r"]
+[ext_resource type="Material" uid="uid://c4wbajue2ysw3" path="res://Mage/PlayerHands.tres" id="5_pfe1r"]
+[ext_resource type="Material" uid="uid://dqeh7s3xa8aa7" path="res://Mage/PlayerFace.tres" id="6_nylqa"]
+[ext_resource type="Material" uid="uid://crvehgcqc2hl" path="res://Mage/PlayerLower.tres" id="7_f3cwt"]
+[ext_resource type="Material" uid="uid://6buk43wp71k" path="res://Mage/PlayerShirt.tres" id="8_7b2yg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b2alh"]
+render_priority = 0
+shader = ExtResource("3_b2alh")
+
+[node name="MageCharacter" instance=ExtResource("1_4224d")]
+
+[node name="Skeleton3D" parent="MageBones" index="0"]
+bones/1/rotation = Quaternion(-0.00031624275, 0, 0, 0.99999994)
+bones/6/rotation = Quaternion(-0.0016631796, 2.3841824e-07, 3.9653292e-10, 0.9999986)
+bones/7/rotation = Quaternion(0.008129724, 0.020423377, 0.943941, -0.32938164)
+bones/8/rotation = Quaternion(-0.21216732, 0.01721291, -0.08968762, 0.97295684)
+bones/10/rotation = Quaternion(-0.047542285, 0.101692535, 0.9114169, -0.39587593)
+bones/12/rotation = Quaternion(-0.09944527, 0.14592598, 0.9721511, -0.15407264)
+bones/12/scale = Vector3(0.9999632, 0.999975, 0.99998546)
+bones/13/rotation = Quaternion(-0.072658874, -0.010532434, -0.08704615, 0.9934952)
+bones/13/scale = Vector3(0.99993575, 0.99996305, 0.99997145)
+bones/14/rotation = Quaternion(-0.06786273, 0.005783602, -0.08109464, 0.9943766)
+bones/14/scale = Vector3(0.9999612, 0.99997944, 0.99998087)
+bones/15/rotation = Quaternion(-0.12871195, -0.0021034954, -0.0886425, 0.9877102)
+bones/15/scale = Vector3(1.0000001, 0.9999825, 1.0000174)
+bones/16/rotation = Quaternion(-0.25341755, 0.017843507, -0.037482563, 0.9664659)
+bones/16/scale = Vector3(0.9999966, 0.999974, 1.00003)
+bones/19/rotation = Quaternion(0.94306403, 0.3318291, 0.019456642, 0.011887151)
+bones/20/rotation = Quaternion(0.16067627, 0.01978501, 0.11984512, 0.97950447)
+bones/22/rotation = Quaternion(0.9105066, 0.39705887, -0.04862555, -0.104678445)
+bones/24/rotation = Quaternion(0.97325647, 0.15529475, -0.098106414, -0.13795143)
+bones/24/scale = Vector3(0.9999975, 0.999979, 0.9999766)
+bones/25/rotation = Quaternion(-0.08342391, 0.009667925, 0.08819866, 0.9925563)
+bones/25/scale = Vector3(0.9999991, 0.99997705, 0.99997663)
+bones/26/rotation = Quaternion(-0.040250134, -0.0032163223, 0.08545355, 0.9955237)
+bones/27/rotation = Quaternion(0.08451156, 0.02086594, 0.086572275, 0.9924352)
+bones/28/rotation = Quaternion(0.15086375, -0.024167446, -0.059428226, 0.98647064)
+bones/33/rotation = Quaternion(0.41636086, -0.031452898, -0.013282355, 0.90855813)
+bones/34/rotation = Quaternion(-0.00016448785, -0.042657956, -0.0023408497, 0.99908704)
+bones/50/rotation = Quaternion(1.8725746e-07, -0.5625443, 0.82676715, -3.1071284e-07)
+bones/51/rotation = Quaternion(0.4169016, -0.023956975, -0.013141668, 0.90854084)
+bones/52/rotation = Quaternion(-0.002041388, -2.5872684e-09, 1.937933e-09, 0.9999979)
+bones/68/rotation = Quaternion(0.3688614, -0.19072084, 0.77245134, 0.48050582)
+bones/69/rotation = Quaternion(0.16124599, -0.0014303979, 0.17423405, 0.9714115)
+bones/69/scale = Vector3(0.9999991, 0.99999934, 0.99999905)
+bones/71/rotation = Quaternion(-0.032700513, 0.0004281944, -0.009388168, 0.999421)
+bones/73/rotation = Quaternion(0.9934932, 0.06485056, -0.092442855, 0.014830828)
+bones/74/rotation = Quaternion(0.023217378, 0.042830884, 0.10576699, 0.9931968)
+bones/77/rotation = Quaternion(-0.092443064, -0.0147793135, 0.9935138, -0.0645465)
+bones/78/rotation = Quaternion(0.023069806, -0.042834178, -0.1050948, 0.99327147)
+bones/81/position = Vector3(0.5153867, -1.0980489, -2.2702184)
+bones/81/rotation = Quaternion(0.34293827, 0.6183796, -0.61837965, -0.34293827)
+bones/82/position = Vector3(-0.5153867, -1.0980489, -2.2702184)
+bones/83/position = Vector3(1.0539463, -3.8263576, 0.21177888)
+bones/84/position = Vector3(-1.0539463, -3.8267038, 0.21177888)
+bones/85/position = Vector3(2.02633, 2.5251956, 2.6616604)
+bones/86/position = Vector3(-1.7088064, 2.4193347, 2.6616604)
+bones/87/position = Vector3(2.2094688, 1.4181683, -2.6518398e-07)
+bones/87/rotation = Quaternion(0.006011301, 0.7070812, -0.70708126, -0.006011301)
+bones/88/position = Vector3(-2.2102904, 1.4210837, 0.012393248)
+
+[node name="BeltBones" parent="MageBones/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("2_b2alh")
+
+[node name="BrowsBones" parent="MageBones/Skeleton3D" index="1"]
+surface_material_override/0 = SubResource("ShaderMaterial_b2alh")
+
+[node name="ButtonBones" parent="MageBones/Skeleton3D" index="2"]
+surface_material_override/0 = ExtResource("2_b2alh")
+
+[node name="CapeBones" parent="MageBones/Skeleton3D" index="3"]
+surface_material_override/0 = ExtResource("3_7vn4n")
+
+[node name="HairBones" parent="MageBones/Skeleton3D" index="4"]
+surface_material_override/0 = ExtResource("4_4638r")
+
+[node name="HandsBones" parent="MageBones/Skeleton3D" index="5"]
+surface_material_override/0 = ExtResource("5_pfe1r")
+
+[node name="HeadBones" parent="MageBones/Skeleton3D" index="6"]
+surface_material_override/0 = ExtResource("6_nylqa")
+
+[node name="PantsBones" parent="MageBones/Skeleton3D" index="7"]
+surface_material_override/0 = ExtResource("7_f3cwt")
+
+[node name="ShirtBones" parent="MageBones/Skeleton3D" index="8"]
+surface_material_override/0 = ExtResource("8_7b2yg")
+surface_material_override/1 = ExtResource("7_f3cwt")
+
+[node name="AnimationPlayer" parent="." index="1"]
+autoplay = "IdleAnimation"

@@ -1,0 +1,18 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://wqmw7nggup40"]
+
+[ext_resource type="Shader" uid="uid://dvbs31kh4b363" path="res://CellBaseFrontFace.gdshader" id="1_drlm1"]
+
+[sub_resource type="Gradient" id="Gradient_s60ot"]
+offsets = PackedFloat32Array(0.358757, 0.612994)
+colors = PackedColorArray(1, 0.56189, 0.772028, 1, 0.236333, 0.21, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_i3yoj"]
+gradient = SubResource("Gradient_s60ot")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_drlm1")
+shader_parameter/base_color = Color(0, 0, 0, 1)
+shader_parameter/top_color = Color(0, 0, 0, 1)
+shader_parameter/blend_amount = 0.3
+shader_parameter/emission_gradient = SubResource("GradientTexture2D_i3yoj")

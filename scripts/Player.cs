@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace Game;
@@ -20,26 +21,29 @@ public partial class Player : CharacterBody3D
     private bool castingSpell = false;
     private string currentSpell = "";
     private SceneTreeTimer clearLabelTimer = null;
-	
-	//Stuff to make superJump work.
-	public bool SuperJumpTriggered = false;
-	public float SuperJumpStrength = 350f;
-	
+    private AnimationPlayer animPlayer;
+
+    //Stuff to make superJump work.
+    public bool SuperJumpTriggered = false;
+    public float SuperJumpStrength = 350f;
+
     public override void _Ready()
     {
         cameraPivot = GetNode<Node3D>("CameraPivot");
         springArm = cameraPivot.GetNode<SpringArm3D>("SpringArm3D");
         camera = springArm.GetNode<Camera3D>("Camera3D");
         spellLabel = GetNode<Label3D>("SpellLabel");
+        animPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
 
         springArm.AddExcludedObject(GetRid());
 
-        if (camera.Current) {
+        if (camera.Current)
+        {
             Input.MouseMode = Input.MouseModeEnum.Captured;
         }
     }
 
-    public override void _UnhandledInput(InputEvent ev)
+    public async override void _UnhandledInput(InputEvent ev)
     {
         if (ev is InputEventMouseButton mouseClickEvent && mouseClickEvent.ButtonIndex == MouseButton.Right)
         {
@@ -49,9 +53,15 @@ public partial class Player : CharacterBody3D
                 spellLabel.Text = "";
                 currentSpell = "";
                 castingSpell = true;
+                animPlayer.Play("MageBonesAction_001");
+
+                await ToSignal(animPlayer, AnimationPlayer.SignalName.AnimationFinished);
+
+                animPlayer.Play("MageBonesAction_002");
             }
             else
             {
+                animPlayer.Play("MageBonesAction_003");
                 castingSpell = false;
                 spellLabel.Text = "";
 
@@ -101,8 +111,10 @@ public partial class Player : CharacterBody3D
 
                 clearLabelTimer = GetTree().CreateTimer(3.0f);
 
-                clearLabelTimer.Timeout += () => {
-                    if (castingSpell == false) {
+                clearLabelTimer.Timeout += () =>
+                {
+                    if (castingSpell == false)
+                    {
                         spellLabel.Modulate = Colors.White;
                         spellLabel.Text = "";
                     }
@@ -112,24 +124,25 @@ public partial class Player : CharacterBody3D
 
         if (ev is InputEventMouseMotion mouseEvent)
         {
-            var xRotation = cameraPivot.Rotation.X - mouseEvent.Relative.Y * MouseSensitivity;
-            xRotation = Mathf.Clamp(xRotation, -TiltAboveMax, TiltBelowMax);
-
-            cameraPivot.Rotation = new Vector3(
-                    xRotation,
-                    cameraPivot.Rotation.Y - mouseEvent.Relative.X * MouseSensitivity,
+            Rotation = new Vector3(
+                    0f,
+                    Rotation.Y - mouseEvent.Relative.X * MouseSensitivity,
                     0f
                     );
+
+            var xRotation = cameraPivot.Rotation.X - mouseEvent.Relative.Y * MouseSensitivity;
+            xRotation = Mathf.Clamp(xRotation, -TiltAboveMax, TiltBelowMax);
+            cameraPivot.Rotation = new Vector3(xRotation, 0f, 0f);
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        var direction = new Vector3(Input.GetAxis("Left", "Right"), 0, Input.GetAxis("Up", "Down")).Rotated(Vector3.Up, cameraPivot.Rotation.Y);
-        
+        var direction = new Vector3(Input.GetAxis("Left", "Right"), 0, Input.GetAxis("Up", "Down")).Rotated(Vector3.Up, Rotation.Y);
+
         bool isSprinting = Input.IsActionPressed("Sprint");
 
-		var currentSpeed = isSprinting ? SprintSpeed + MoveSpeed: MoveSpeed;
+        var currentSpeed = isSprinting ? SprintSpeed + MoveSpeed : MoveSpeed;
 
         var velocity = direction * currentSpeed;
 
@@ -141,12 +154,12 @@ public partial class Player : CharacterBody3D
         {
             velocity.Y = JumpForce;
         }
-		if (SuperJumpTriggered)
-		{
-			velocity.Y = SuperJumpStrength;
-			SuperJumpTriggered = false; // reset so it's one-time
-			GD.Print("SUPER JUMP!");
-		}
+        if (SuperJumpTriggered)
+        {
+            velocity.Y = SuperJumpStrength;
+            SuperJumpTriggered = false; // reset so it's one-time
+            GD.Print("SUPER JUMP!");
+        }
         if (castingSpell == true)
         {
             velocity = Vector3.Zero;
@@ -161,6 +174,24 @@ public partial class Player : CharacterBody3D
             Input.MouseMode = Input.MouseModeEnum.Visible;
             GetTree().Paused = true;
             pauseMenu.Visible = true;
+        }
+
+        if (Velocity != Vector3.Zero)
+        {
+            if (Input.IsActionPressed("Sprint"))
+            {
+                animPlayer.Play("Running");
+                animPlayer.SpeedScale = 3f;
+            }
+            else
+            {
+                animPlayer.Play("MageBonesAction");
+                animPlayer.SpeedScale = 3f;
+            }
+        }
+        else
+        {
+            animPlayer.Play("IdleAnimation");
         }
     }
 
@@ -187,13 +218,13 @@ public partial class Player : CharacterBody3D
             spellLabel.Text += "Right ";
         }
     }
-	public float getMoveSpeed()
-	{
-		return MoveSpeed;
-	}
+    public float getMoveSpeed()
+    {
+        return MoveSpeed;
+    }
 
-	public void setMoveSpeed(float newSpeed)
-	{
-		MoveSpeed = newSpeed;
-	}
+    public void setMoveSpeed(float newSpeed)
+    {
+        MoveSpeed = newSpeed;
+    }
 }
