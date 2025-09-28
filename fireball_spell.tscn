@@ -1,17 +1,20 @@
-[gd_scene load_steps=7 format=3 uid="uid://clvw820amojpc"]
+[gd_scene load_steps=8 format=3 uid="uid://clvw820amojpc"]
 
 [ext_resource type="Script" uid="uid://djtk10bt2tmu" path="res://scripts/FireballSpell.cs" id="1_2y812"]
-[ext_resource type="ArrayMesh" uid="uid://r3o3aomibtk2" path="res://Fireball Meshes/Fireball Head Mesh.res" id="2_xi4td"]
-[ext_resource type="Shader" uid="uid://cn2rwg0n5pu8p" path="res://fireball_head.tres" id="3_nkp5t"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_460m8"]
-render_priority = 0
-shader = ExtResource("3_nkp5t")
-shader_parameter/Fire_Color = Color(0.010515393, 0.0052576964, 0.28630924, 1)
+[ext_resource type="ArrayMesh" uid="uid://ietkbcgapr1y" path="res://Fireball Meshes/Fireball Head.res" id="2_7qilv"]
+[ext_resource type="Shader" uid="uid://cx1ntpunkoh6a" path="res://fire_core_shader.tres" id="3_xi4td"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qxk35"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_xi4td"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nkp5t"]
+render_priority = 0
+shader = ExtResource("3_xi4td")
+shader_parameter/Core_Color = Color(0.30029297, 0.9375, 0.9375, 1)
+shader_parameter/Fresnel_Power = 4.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_460m8"]
 
 [node name="Fireball Rigidbody" type="RigidBody3D"]
 gravity_scale = 0.0
@@ -20,9 +23,8 @@ max_contacts_reported = 1
 script = ExtResource("1_2y812")
 
 [node name="Fireball Mesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(19.685, 0, 0, 0, 19.685, 0, 0, 0, 19.685, 0, 0, 0)
-mesh = ExtResource("2_xi4td")
-surface_material_override/0 = SubResource("ShaderMaterial_460m8")
+transform = Transform3D(-200, 0, -1.7484555e-05, 0, 200, 0, 1.7484555e-05, 0, -200, 0.017146796, 0.026168153, -0.5012778)
+mesh = ExtResource("2_7qilv")
 
 [node name="Area3D" type="Area3D" parent="Fireball Mesh"]
 
@@ -31,3 +33,8 @@ shape = SubResource("SphereShape3D_qxk35")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_xi4td")
+
+[node name="Fire Core" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.005, 0, 0, 0, 3.005, 0, 0, 0, 3.005, 0, 0, -0.7051141)
+material_override = SubResource("ShaderMaterial_nkp5t")
+mesh = SubResource("SphereMesh_460m8")
