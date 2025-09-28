@@ -1,0 +1,38 @@
+[gd_resource type="VisualShader" load_steps=3 format=3 uid="uid://dgjjhkj2rsle7"]
+
+[ext_resource type="Texture2D" uid="uid://n566ojah4472" path="res://27037858aff9d4742cda90959f773171.png" id="1_l55rx"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_amnlq"]
+expanded_output_ports = [0]
+texture = ExtResource("1_l55rx")
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_never, depth_test_default, cull_disabled, diffuse_lambert, specular_schlick_ggx, unshaded, shadows_disabled, ambient_light_disabled, fog_disabled;
+
+uniform sampler2D tex_frg_2;
+
+
+
+void fragment() {
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, UV);
+	float n_out2p4 = n_out2p0.a;
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0.xyz);
+	ALPHA = n_out2p4;
+
+
+}
+"
+modes/depth_draw = 2
+modes/cull = 2
+flags/unshaded = true
+flags/shadows_disabled = true
+flags/ambient_light_disabled = true
+flags/fog_disabled = true
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_amnlq")
+nodes/fragment/2/position = Vector2(-120, 120)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 0, 2, 4, 0, 1)

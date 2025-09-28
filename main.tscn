@@ -1,8 +1,19 @@
-[gd_scene load_steps=13 format=3 uid="uid://cbu5pvd6vfm28"]
+[gd_scene load_steps=31 format=3 uid="uid://cbu5pvd6vfm28"]
 
 [ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Shader" uid="uid://58x1nuavwph6" path="res://floor.tres" id="1_w48qg"]
 [ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://cpi4veape7d46" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://c2hle0i30swy7" path="res://addons/proton_scatter/src/scatter.gd" id="4_w48qg"]
+[ext_resource type="Script" uid="uid://d2vbryw2as5he" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="5_vivmo"]
+[ext_resource type="Script" uid="uid://blsnmotqaatsd" path="res://addons/proton_scatter/src/modifiers/base_modifier.gd" id="6_2cqfq"]
+[ext_resource type="Script" uid="uid://ci8lww0vafsee" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="7_yaehf"]
+[ext_resource type="Script" uid="uid://cd2l7lopqmtok" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="8_074og"]
+[ext_resource type="Script" uid="uid://7ib4bjetrsai" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="9_cegan"]
+[ext_resource type="Script" uid="uid://bp0sd82ybhvvp" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="10_82xsv"]
+[ext_resource type="Script" uid="uid://cb2s3eplg5vje" path="res://addons/proton_scatter/src/scatter_item.gd" id="11_getpj"]
+[ext_resource type="Script" uid="uid://0jo7vwpcnbf7" path="res://addons/proton_scatter/src/scatter_shape.gd" id="12_ryguw"]
+[ext_resource type="Script" uid="uid://c6okhqxhxn44s" path="res://addons/proton_scatter/src/shapes/box_shape.gd" id="13_d13ii"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -17,7 +28,12 @@ sky = SubResource("Sky_ig7tw")
 tonemap_mode = 2
 glow_enabled = true
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vivmo"]
+render_priority = 0
+shader = ExtResource("1_w48qg")
+
 [sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+material = SubResource("ShaderMaterial_vivmo")
 size = Vector3(200, 1, 200)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
@@ -47,6 +63,42 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="Resource" id="Resource_ycdy4"]
+script = ExtResource("7_yaehf")
+amount = 1000000
+override_global_seed = true
+custom_seed = 4
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_w48qg"]
+script = ExtResource("8_074og")
+position = Vector3(0.3, 0.15, 0.3)
+rotation = Vector3(3, 0, 3)
+scale = Vector3(0.1, 0.1, 0.1)
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_vivmo"]
+script = ExtResource("9_cegan")
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+restrict_height = true
+
+[sub_resource type="Resource" id="Resource_2cqfq"]
+script = ExtResource("10_82xsv")
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = false
+
+[sub_resource type="Resource" id="Resource_yaehf"]
+script = ExtResource("5_vivmo")
+stack = Array[ExtResource("6_2cqfq")]([SubResource("Resource_ycdy4"), SubResource("Resource_w48qg"), SubResource("Resource_vivmo"), SubResource("Resource_2cqfq")])
+
+[sub_resource type="Resource" id="Resource_074og"]
+script = ExtResource("13_d13ii")
+size = Vector3(1, 0.561, 1)
+metadata/_custom_type_script = "uid://c6okhqxhxn44s"
+
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -59,6 +111,7 @@ shadow_enabled = true
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0005233288, 0, -0.004699588)
 mesh = SubResource("BoxMesh_7dm0k")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
@@ -171,3 +224,24 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_lquwl")
 step = 1.0
 value = 100.0
 show_percentage = false
+
+[node name="ProtonScatter" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("4_w48qg")
+modifier_stack = SubResource("Resource_yaehf")
+Performance/use_chunks = false
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+metadata/_custom_type_script = "uid://c2hle0i30swy7"
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545, 1.176, -0.505)
+script = ExtResource("11_getpj")
+override_cast_shadow = 0
+path = "uid://cwish8eybpaj5"
+metadata/_custom_type_script = "uid://cb2s3eplg5vje"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatter"]
+transform = Transform3D(800, 0, 0, 0, 1, 0, 0, 0, 800, 0.00092327595, 0, -0.0027031898)
+script = ExtResource("12_ryguw")
+shape = SubResource("Resource_074og")
+metadata/_custom_type_script = "uid://0jo7vwpcnbf7"

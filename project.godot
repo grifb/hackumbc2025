@@ -31,6 +31,10 @@ window/vsync/vsync_mode=0
 
 project/assembly_name="Game"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/proton_scatter/plugin.cfg")
+
 [global_group]
 
 Player=""
