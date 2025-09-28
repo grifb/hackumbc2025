@@ -37,6 +37,11 @@ public partial class Health : Node
             CurrentHealth -= Mathf.Abs(amount);
         }
 
+        if (CurrentHealth == 0)
+        {
+            EmitSignal(SignalName.Died);
+        }
+
         EmitSignal(SignalName.HealthChanged, CurrentHealth);
     }
 }
