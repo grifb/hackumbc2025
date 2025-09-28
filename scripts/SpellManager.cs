@@ -71,17 +71,7 @@ public partial class SpellManager : Node
 				
 			],
 			Spell.SuperJump
-		},
-		{
-			[
-				SpellInput.Up,
-				SpellInput.Right,
-				SpellInput.Left,
-				SpellInput.Down
-			],
-			Spell.SpeedBoost
-
-		}
+		}	
 	};
 
 	public readonly Dictionary<string, Spell> SpellTable = [];
