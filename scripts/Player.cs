@@ -1,5 +1,4 @@
 using Godot;
-using System.Collections.Generic;
 
 namespace Game;
 
@@ -14,14 +13,18 @@ public partial class Player : CharacterBody3D
     [Export(PropertyHint.Range, "0,180,radians_as_degrees")] private float TiltAboveMax = Mathf.DegToRad(75f);
     [Export(PropertyHint.Range, "0,180,radians_as_degrees")] private float TiltBelowMax = Mathf.DegToRad(50);
     [Export] private float MoveSpeed = 10f;
-    [Export] private float SprintMultiplier = 1.15f;
+    [Export] private float SprintSpeed = 40f;
     [Export] private float JumpForce = 50f;
     [Export] private float Mass = 50f;
     [Export] private float MouseSensitivity = 0.01f;
     private bool castingSpell = false;
     private string currentSpell = "";
     private SceneTreeTimer clearLabelTimer = null;
-
+	
+	//Stuff to make superJump work.
+	public bool SuperJumpTriggered = false;
+	public float SuperJumpStrength = 350f;
+	
     public override void _Ready()
     {
         cameraPivot = GetNode<Node3D>("CameraPivot");
@@ -85,7 +88,7 @@ public partial class Player : CharacterBody3D
                 {
                     spellLabel.Modulate = Colors.LimeGreen;
                     spellLabel.Text = spell;
-
+					BuffSpells.ApplySpellEffects(spell,this); //Call script that has speedboost and superjump
                 }
 
                 clearLabelTimer = GetTree().CreateTimer(3.0f);
@@ -115,12 +118,12 @@ public partial class Player : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
         var direction = new Vector3(Input.GetAxis("Left", "Right"), 0, Input.GetAxis("Up", "Down")).Rotated(Vector3.Up, cameraPivot.Rotation.Y);
-        var velocity = direction * MoveSpeed;
         
-
         bool isSprinting = Input.IsActionPressed("Sprint");
 
-        MoveSpeed = isSprinting ? MoveSpeed * SprintMultiplier : MoveSpeed;
+		var currentSpeed = isSprinting ? SprintSpeed + MoveSpeed: MoveSpeed;
+
+        var velocity = direction * currentSpeed;
 
         if (IsOnFloor() == false)
         {
@@ -130,7 +133,12 @@ public partial class Player : CharacterBody3D
         {
             velocity.Y = JumpForce;
         }
-
+		if (SuperJumpTriggered)
+		{
+			velocity.Y = SuperJumpStrength;
+			SuperJumpTriggered = false; // reset so it's one-time
+			GD.Print("SUPER JUMP!");
+		}
         if (castingSpell == true)
         {
             velocity = Vector3.Zero;
@@ -171,4 +179,13 @@ public partial class Player : CharacterBody3D
             spellLabel.Text += "Right ";
         }
     }
+	public float getMoveSpeed()
+	{
+		return MoveSpeed;
+	}
+
+	public void setMoveSpeed(float newSpeed)
+	{
+		MoveSpeed = newSpeed;
+	}
 }

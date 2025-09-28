@@ -61,12 +61,24 @@ public partial class SpellManager : Node
 				SpellInput.Up
 			],
 			Spell.Fireball
-		}, { 
+		},
+		{
+			[
+				SpellInput.Up,
+				SpellInput.Down,
+				SpellInput.Up,
+				SpellInput.Up,
+
+			],
+			Spell.SuperJump
+		},
+		{
 			[
 				SpellInput.Down,
-				SpellInput.Down
+				SpellInput.Down,
+
 			],
-			Spell.Shield
+				Spell.Shield
 		}
 	};
 

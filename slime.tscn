@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dy5fpbujc571e"]
+[gd_scene load_steps=8 format=3 uid="uid://dy5fpbujc571e"]
 
 [ext_resource type="Script" uid="uid://brr62gcnxog1p" path="res://scripts/JumpingNPC.cs" id="1_2d52u"]
+[ext_resource type="Script" uid="uid://ci2b5mso4tamp" path="res://scripts/Health.cs" id="2_5jc4t"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vjne"]
 albedo_color = Color(0.6431373, 0, 0.043137256, 1)
@@ -46,3 +47,7 @@ autostart = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TargetRadius"]
 shape = SubResource("SphereShape3D_2d52u")
 debug_color = Color(0.5464882, 0.086631455, 0.98232096, 0.41960785)
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_5jc4t")
+metadata/_custom_type_script = "uid://ci2b5mso4tamp"

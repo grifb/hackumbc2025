@@ -20,6 +20,7 @@ public partial class JumpingNPC : CharacterBody3D
     public Area3D HitBox { get; private set; }
     private Area3D targetRadius;
     private Timer attackTimer;
+    private Health health;
     private NPCState currentState;
     private RandomNumberGenerator rng;
     private Node3D playerBody = null;
@@ -29,6 +30,7 @@ public partial class JumpingNPC : CharacterBody3D
         HitBox = GetNode<Area3D>("Hitbox");
         targetRadius = GetNode<Area3D>("TargetRadius");
         attackTimer = GetNode<Timer>("AttackTimer");
+        health = GetNode<Health>("Health");
         rng = new RandomNumberGenerator();
 
         attackTimer.Timeout += () => {
@@ -57,6 +59,8 @@ public partial class JumpingNPC : CharacterBody3D
                 currentState = NPCState.Patrol;
             }
         };
+
+        health.Died += QueueFree;
 
         currentState = NPCState.Patrol;
     }
