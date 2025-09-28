@@ -21,7 +21,11 @@ public partial class Player : CharacterBody3D
     private bool castingSpell = false;
     private string currentSpell = "";
     private SceneTreeTimer clearLabelTimer = null;
-
+	
+	//Stuff to make superJump work.
+	public bool SuperJumpTriggered = false;
+	public float SuperJumpStrength = 350f;
+	
     public override void _Ready()
     {
         cameraPivot = GetNode<Node3D>("CameraPivot");
@@ -77,7 +81,7 @@ public partial class Player : CharacterBody3D
                 {
                     spellLabel.Modulate = Colors.LimeGreen;
                     spellLabel.Text = spell;
-
+					BuffSpells.ApplySpellEffects(spell,this); //Call script that has speedboost and superjump
                 }
 
                 clearLabelTimer = GetTree().CreateTimer(3.0f);
@@ -122,7 +126,12 @@ public partial class Player : CharacterBody3D
         {
             velocity.Y = JumpForce;
         }
-
+		if (SuperJumpTriggered)
+		{
+			velocity.Y = SuperJumpStrength;
+			SuperJumpTriggered = false; // reset so it's one-time
+			GD.Print("SUPER JUMP!");
+		}
         if (castingSpell == true)
         {
             velocity = Vector3.Zero;
