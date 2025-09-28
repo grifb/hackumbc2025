@@ -1,0 +1,3 @@
+[gd_scene load_steps=0 format=3 uid="uid://b7eo4ywhva7b4"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]

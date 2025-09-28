@@ -1,8 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://clvw820amojpc"]
+[gd_scene load_steps=17 format=3 uid="uid://clvw820amojpc"]
 
 [ext_resource type="Script" uid="uid://djtk10bt2tmu" path="res://scripts/FireballSpell.cs" id="1_2y812"]
-[ext_resource type="ArrayMesh" uid="uid://ietkbcgapr1y" path="res://Fireball Meshes/Fireball Head.res" id="2_7qilv"]
+[ext_resource type="ArrayMesh" uid="uid://l4c383pqa5wq" path="res://Fireball Meshes/Fireball Head.res" id="2_7qilv"]
+[ext_resource type="Shader" uid="uid://cn2rwg0n5pu8p" path="res://fireball_head.tres" id="2_7v15r"]
 [ext_resource type="Shader" uid="uid://cx1ntpunkoh6a" path="res://fire_core_shader.tres" id="3_xi4td"]
+[ext_resource type="Shader" uid="uid://c0w2qyb75qwmd" path="res://fireball_trail.tres" id="5_04qqe"]
+[ext_resource type="Texture2D" uid="uid://c874bilemfyoi" path="res://T_VFX_basic1.PNG" id="6_pklry"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xe60m"]
+render_priority = 0
+shader = ExtResource("2_7v15r")
+shader_parameter/ColorParameter = Color(0.6853209, 7.0288973, 7.597828, 1)
+shader_parameter/Speed = Vector2(3, 6)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_qxk35"]
 
@@ -16,6 +25,44 @@ shader_parameter/Fresnel_Power = 4.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_460m8"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l8kgg"]
+render_priority = 0
+shader = ExtResource("5_04qqe")
+shader_parameter/Trail_Speed = Vector2(4, 0)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_kkora"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_61uo8"]
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_color = Color(0, 0.7605362, 1, 1)
+albedo_texture = ExtResource("6_pklry")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6sgch"]
+particle_flag_align_y = true
+emission_shape_scale = Vector3(3, 2, 3)
+emission_shape = 1
+emission_sphere_radius = 1.0
+angle_min = 1.0728835e-05
+angle_max = 1.0728835e-05
+direction = Vector3(-6, 0, 0)
+spread = 0.0
+initial_velocity_min = 8.0
+initial_velocity_max = 24.0
+radial_velocity_min = 0.99997765
+radial_velocity_max = 1.9999776
+gravity = Vector3(0, 0, 0)
+scale_min = 0.099999994
+color = Color(0, 3.4751832, 3.0421526, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_q3xes"]
+size = Vector2(0.1, 0.3)
+
 [node name="Fireball Rigidbody" type="RigidBody3D"]
 gravity_scale = 0.0
 contact_monitor = true
@@ -24,6 +71,7 @@ script = ExtResource("1_2y812")
 
 [node name="Fireball Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-200, 0, -1.7484555e-05, 0, 200, 0, 1.7484555e-05, 0, -200, 0.017146796, 0.026168153, -0.5012778)
+material_override = SubResource("ShaderMaterial_xe60m")
 mesh = ExtResource("2_7qilv")
 
 [node name="Area3D" type="Area3D" parent="Fireball Mesh"]
@@ -38,3 +86,15 @@ shape = SubResource("SphereShape3D_xi4td")
 transform = Transform3D(3.005, 0, 0, 0, 3.005, 0, 0, 0, 3.005, 0, 0, -0.7051141)
 material_override = SubResource("ShaderMaterial_nkp5t")
 mesh = SubResource("SphereMesh_460m8")
+
+[node name="Trail Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-8.576171e-08, -2.0577139e-07, 1.8600003, -1.9619998, -2.0577137e-07, -8.130317e-08, 8.576174e-08, -4.7075, -8.130319e-08, 0, 0, 2.5320935)
+material_override = SubResource("ShaderMaterial_l8kgg")
+mesh = SubResource("CapsuleMesh_kkora")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_61uo8")
+amount = 2056
+process_material = SubResource("ParticleProcessMaterial_6sgch")
+draw_pass_1 = SubResource("QuadMesh_q3xes")

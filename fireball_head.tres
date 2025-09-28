@@ -17,8 +17,8 @@ texture_type = 1
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ja1cl"]
 gradient = SubResource("Gradient_38ido")
-fill_from = Vector2(0.4957265, 0.74786323)
-fill_to = Vector2(0.508547, 1)
+fill_from = Vector2(0.508547, 0.6837607)
+fill_to = Vector2(0.5, 1)
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_gjk64"]
 expanded_output_ports = [0]
@@ -107,21 +107,21 @@ flags/shadows_disabled = true
 flags/ambient_light_disabled = true
 nodes/fragment/0/position = Vector2(840, 160)
 nodes/fragment/3/node = SubResource("VisualShaderNodeTexture_qodly")
-nodes/fragment/3/position = Vector2(20, 380)
+nodes/fragment/3/position = Vector2(120, 660)
 nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_gjk64")
-nodes/fragment/4/position = Vector2(-60, 840)
+nodes/fragment/4/position = Vector2(-580, 320)
 nodes/fragment/5/node = SubResource("VisualShaderNodeFloatOp_wmdax")
 nodes/fragment/5/position = Vector2(360, 440)
 nodes/fragment/6/node = SubResource("VisualShaderNodeClamp_j7u2b")
-nodes/fragment/6/position = Vector2(620, 480)
+nodes/fragment/6/position = Vector2(580, 420)
 nodes/fragment/7/node = SubResource("VisualShaderNodeUVFunc_jwaev")
 nodes/fragment/7/position = Vector2(-360, 660)
 nodes/fragment/8/node = SubResource("VisualShaderNodeInput_c6vy2")
-nodes/fragment/8/position = Vector2(-940, 600)
+nodes/fragment/8/position = Vector2(-1060, 640)
 nodes/fragment/9/node = SubResource("VisualShaderNodeVectorOp_jo8wr")
 nodes/fragment/9/position = Vector2(-640, 780)
 nodes/fragment/10/node = SubResource("VisualShaderNodeVec2Parameter_ph4p6")
-nodes/fragment/10/position = Vector2(-1240, 880)
+nodes/fragment/10/position = Vector2(-1360, 840)
 nodes/fragment/12/node = SubResource("VisualShaderNodeColorParameter_dp5av")
 nodes/fragment/12/position = Vector2(-360, 180)
 nodes/fragment/connections = PackedInt32Array(4, 1, 5, 1, 3, 1, 5, 0, 5, 0, 6, 0, 6, 0, 0, 1, 7, 0, 3, 0, 8, 0, 9, 0, 9, 0, 7, 2, 10, 0, 9, 1, 12, 0, 0, 0)

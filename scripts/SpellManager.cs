@@ -118,7 +118,7 @@ public partial class SpellManager : Node
 		Debug.Print("Fireball name: {0}", fireball_rigidBody.Rotation);
 		fireballSpellActual.setPosition(position);
 		fireballSpellActual.setRotation(direction);
-		fireballSpellActual.Launch(20);
+		fireballSpellActual.Launch(50);
 
 		
 		
