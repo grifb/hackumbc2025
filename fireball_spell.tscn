@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://clvw820amojpc"]
+
+[ext_resource type="Script" uid="uid://djtk10bt2tmu" path="res://scripts/FireballSpell.cs" id="1_2y812"]
+[ext_resource type="ArrayMesh" uid="uid://r3o3aomibtk2" path="res://Fireball Meshes/Fireball Head Mesh.res" id="2_xi4td"]
+[ext_resource type="Shader" uid="uid://cn2rwg0n5pu8p" path="res://fireball_head.tres" id="3_nkp5t"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_460m8"]
+render_priority = 0
+shader = ExtResource("3_nkp5t")
+shader_parameter/Fire_Color = Color(0.010515393, 0.0052576964, 0.28630924, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qxk35"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xi4td"]
+
+[node name="Fireball Rigidbody" type="RigidBody3D"]
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_2y812")
+
+[node name="Fireball Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(19.685, 0, 0, 0, 19.685, 0, 0, 0, 19.685, 0, 0, 0)
+mesh = ExtResource("2_xi4td")
+surface_material_override/0 = SubResource("ShaderMaterial_460m8")
+
+[node name="Area3D" type="Area3D" parent="Fireball Mesh"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Fireball Mesh/Area3D"]
+shape = SubResource("SphereShape3D_qxk35")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_xi4td")

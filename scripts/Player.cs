@@ -60,10 +60,24 @@ public partial class Player : CharacterBody3D
                     spellLabel.Modulate = Colors.DarkSlateGray;
                     spellLabel.Text = "You cast like a raging barbarian";
                 }
+                else if (spell == "Fireball")
+                {
+                    spellLabel.Modulate = Colors.LimeGreen;
+                    spellLabel.Text = spell;
+
+                    Vector3 cameraPosition = camera.GlobalTransform.Origin;
+                    Vector3 cameraGlobalForward = camera.GlobalTransform.Basis.Z;
+                    Vector3 cameraForward = camera.Transform.Basis.Z;
+                    Vector3 spawn = cameraPosition + cameraGlobalForward * -6;
+                    spawn.Y = GlobalPosition.Y;
+                    SpellManager.Instance.Fireball(camera.GlobalRotation, spawn);
+                }
+
                 else
                 {
                     spellLabel.Modulate = Colors.LimeGreen;
                     spellLabel.Text = spell;
+
                 }
 
                 clearLabelTimer = GetTree().CreateTimer(3.0f);
@@ -94,6 +108,7 @@ public partial class Player : CharacterBody3D
     {
         var direction = new Vector3(Input.GetAxis("Left", "Right"), 0, Input.GetAxis("Up", "Down")).Rotated(Vector3.Up, cameraPivot.Rotation.Y);
         var velocity = direction * MoveSpeed;
+        
 
         bool isSprinting = Input.IsActionPressed("Sprint");
 
