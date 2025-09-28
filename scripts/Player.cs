@@ -14,7 +14,7 @@ public partial class Player : CharacterBody3D
     [Export(PropertyHint.Range, "0,180,radians_as_degrees")] private float TiltAboveMax = Mathf.DegToRad(75f);
     [Export(PropertyHint.Range, "0,180,radians_as_degrees")] private float TiltBelowMax = Mathf.DegToRad(50);
     [Export] private float MoveSpeed = 10f;
-    [Export] private float SprintMultiplier = 1.15f;
+    [Export] private float SprintSpeed = 40f;
     [Export] private float JumpForce = 50f;
     [Export] private float Mass = 50f;
     [Export] private float MouseSensitivity = 0.01f;
@@ -107,12 +107,12 @@ public partial class Player : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
         var direction = new Vector3(Input.GetAxis("Left", "Right"), 0, Input.GetAxis("Up", "Down")).Rotated(Vector3.Up, cameraPivot.Rotation.Y);
-        var velocity = direction * MoveSpeed;
         
-
         bool isSprinting = Input.IsActionPressed("Sprint");
 
-        MoveSpeed = isSprinting ? MoveSpeed * SprintMultiplier : MoveSpeed;
+		var currentSpeed = isSprinting ? SprintSpeed + MoveSpeed: MoveSpeed;
+
+        var velocity = direction * currentSpeed;
 
         if (IsOnFloor() == false)
         {
