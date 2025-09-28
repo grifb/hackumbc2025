@@ -177,15 +177,6 @@ public partial class Player : CharacterBody3D
 		MoveSpeed = newSpeed;
 	}
 
-	public float getJumpForce()
-	{
-		return JumpForce;
-	}
-	
-	public void setJumpForce(float newJumpForce)
-	{
-		JumpForce = newJumpForce;
-	}
 	
 	
 }
