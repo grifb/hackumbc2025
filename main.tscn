@@ -43,7 +43,7 @@ mesh = SubResource("BoxMesh_7dm0k")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_ig7tw")
 
-[node name="Player" parent="." node_paths=PackedStringArray("pauseMenu") instance=ExtResource("1_ig7tw")]
+[node name="Player" parent="." node_paths=PackedStringArray("pauseMenu") groups=["Player"] instance=ExtResource("1_ig7tw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 pauseMenu = NodePath("../PauseMenu")
 
