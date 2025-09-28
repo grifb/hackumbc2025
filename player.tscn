@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://diww0546713hk" path="res://scripts/Player.cs" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://ci2b5mso4tamp" path="res://scripts/Health.cs" id="2_i3pqv"]
 [ext_resource type="Script" uid="uid://ws47g802yp0m" path="res://scripts/Mana.cs" id="3_hqtel"]
-[ext_resource type="PackedScene" uid="uid://cx8aoyg8c65bq" path="res://Mage/mage_character.tscn" id="4_hqtel"]
+[ext_resource type="PackedScene" uid="uid://17cd6an2fbga" path="res://Mage/mage_character_animations.tscn" id="4_hqtel"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hqtel"]
 size = Vector3(1, 2.6687908, 1)
@@ -38,5 +38,5 @@ metadata/_custom_type_script = "uid://ws47g802yp0m"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8708801, 0)
 shape = SubResource("BoxShape3D_hqtel")
 
-[node name="MageCharacter" parent="." instance=ExtResource("4_hqtel")]
+[node name="Model" parent="." instance=ExtResource("4_hqtel")]
 transform = Transform3D(-8.742278e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.742278e-09, 0, 0, 0)

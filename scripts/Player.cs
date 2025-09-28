@@ -21,6 +21,7 @@ public partial class Player : CharacterBody3D
     private bool castingSpell = false;
     private string currentSpell = "";
     private SceneTreeTimer clearLabelTimer = null;
+    private AnimationPlayer animPlayer;
 
     //Stuff to make superJump work.
     public bool SuperJumpTriggered = false;
@@ -32,6 +33,7 @@ public partial class Player : CharacterBody3D
         springArm = cameraPivot.GetNode<SpringArm3D>("SpringArm3D");
         camera = springArm.GetNode<Camera3D>("Camera3D");
         spellLabel = GetNode<Label3D>("SpellLabel");
+        animPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
 
         springArm.AddExcludedObject(GetRid());
 
@@ -41,7 +43,7 @@ public partial class Player : CharacterBody3D
         }
     }
 
-    public override void _UnhandledInput(InputEvent ev)
+    public async override void _UnhandledInput(InputEvent ev)
     {
         if (ev is InputEventMouseButton mouseClickEvent && mouseClickEvent.ButtonIndex == MouseButton.Right)
         {
@@ -51,9 +53,15 @@ public partial class Player : CharacterBody3D
                 spellLabel.Text = "";
                 currentSpell = "";
                 castingSpell = true;
+                animPlayer.Play("MageBonesAction_001");
+
+                await ToSignal(animPlayer, AnimationPlayer.SignalName.AnimationFinished);
+
+                animPlayer.Play("MageBonesAction_002");
             }
             else
             {
+                animPlayer.Play("MageBonesAction_003");
                 castingSpell = false;
                 spellLabel.Text = "";
 
@@ -150,6 +158,24 @@ public partial class Player : CharacterBody3D
             Input.MouseMode = Input.MouseModeEnum.Visible;
             GetTree().Paused = true;
             pauseMenu.Visible = true;
+        }
+
+        if (Velocity != Vector3.Zero)
+        {
+            if (Input.IsActionPressed("Sprint"))
+            {
+                animPlayer.Play("Running");
+                animPlayer.SpeedScale = 3f;
+            }
+            else
+            {
+                animPlayer.Play("MageBonesAction");
+                animPlayer.SpeedScale = 3f;
+            }
+        }
+        else
+        {
+            animPlayer.Play("IdleAnimation");
         }
     }
 
