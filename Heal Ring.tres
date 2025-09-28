@@ -1,0 +1,59 @@
+[gd_resource type="VisualShader" load_steps=6 format=3 uid="uid://c1c7pni2a1s80"]
+
+[ext_resource type="Texture2D" uid="uid://dachlaxrq8wm0" path="res://Heal Line.png" id="1_ynri2"]
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_k22xv"]
+texture = ExtResource("1_ynri2")
+
+[sub_resource type="VisualShaderNodeUVFunc" id="VisualShaderNodeUVFunc_4opve"]
+default_input_values = [1, Vector2(0, -0.5), 2, Vector2(90, 0)]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_4hfh4"]
+input_name = "time"
+
+[sub_resource type="VisualShaderNodeColorParameter" id="VisualShaderNodeColorParameter_hd5qi"]
+parameter_name = "ColorParameter"
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform vec4 ColorParameter : source_color;
+uniform sampler2D tex_frg_2;
+
+
+
+void fragment() {
+// ColorParameter:5
+	vec4 n_out5p0 = ColorParameter;
+
+
+// Input:4
+	float n_out4p0 = TIME;
+
+
+// UVFunc:3
+	vec2 n_in3p1 = vec2(0.00000, -0.50000);
+	vec2 n_out3p0 = vec2(n_out4p0) * n_in3p1 + UV;
+
+
+// Texture2D:2
+	vec4 n_out2p0 = texture(tex_frg_2, n_out3p0);
+
+
+// Output:0
+	ALBEDO = vec3(n_out5p0.xyz);
+	ALPHA = n_out2p0.x;
+
+
+}
+"
+nodes/fragment/2/node = SubResource("VisualShaderNodeTexture_k22xv")
+nodes/fragment/2/position = Vector2(-160, 280)
+nodes/fragment/3/node = SubResource("VisualShaderNodeUVFunc_4opve")
+nodes/fragment/3/position = Vector2(-380, 280)
+nodes/fragment/4/node = SubResource("VisualShaderNodeInput_4hfh4")
+nodes/fragment/4/position = Vector2(-940, 300)
+nodes/fragment/5/node = SubResource("VisualShaderNodeColorParameter_hd5qi")
+nodes/fragment/5/position = Vector2(-160, 20)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 1, 3, 0, 2, 0, 4, 0, 3, 2, 5, 0, 0, 0)

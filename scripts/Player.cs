@@ -83,12 +83,20 @@ public partial class Player : CharacterBody3D
                     
                     SpellManager.Instance.Shield(this);
                 }
+                else if (spell == "Healing")
+                {
+                    spellLabel.Modulate = Colors.LimeGreen;
+                    spellLabel.Text = spell;
+
+                    
+                    SpellManager.Instance.Heal(this);
+                }
 
                 else
                 {
                     spellLabel.Modulate = Colors.LimeGreen;
                     spellLabel.Text = spell;
-					BuffSpells.ApplySpellEffects(spell,this); //Call script that has speedboost and superjump
+                    BuffSpells.ApplySpellEffects(spell, this); //Call script that has speedboost and superjump
                 }
 
                 clearLabelTimer = GetTree().CreateTimer(3.0f);

@@ -13,7 +13,7 @@ public partial class Health : Node
 
     public override void _Ready()
     {
-        CurrentHealth = MaxHealth;
+        CurrentHealth = MaxHealth / 10;
     }
 
     public void Heal(int amount)

@@ -79,6 +79,14 @@ public partial class SpellManager : Node
 
 			],
 				Spell.Shield
+		},
+		{
+			[
+				SpellInput.Left,
+				SpellInput.Left,
+
+			],
+				Spell.Healing
 		}
 	};
 
@@ -151,7 +159,22 @@ public partial class SpellManager : Node
 		Debug.Print("Shield set");
 		Debug.Print("Shield name: {0}", shieldActual.Name);
 		shieldActual.Cast(player);
-		
+
+	}
+	
+	public void Heal(Player player)
+	{
+		var heal = GD.Load<PackedScene>("res://heal_spell.tscn");
+		Debug.Print("Heal loaded");
+		Node heal_node = heal.Instantiate();
+		GetTree().Root.AddChild(heal_node);
+
+		Debug.Print("Heal instantiated");
+		HealSpell healActual = (HealSpell)heal_node;
+		Debug.Print("Heal set");
+		Debug.Print("Heal name: {0}", healActual.Name);
+		healActual.Cast(player);
+
 	}
 
 

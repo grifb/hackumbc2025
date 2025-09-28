@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Godot;
 
 namespace Game;
@@ -14,6 +15,7 @@ public partial class HUD : CanvasLayer
         var playerMana = player.GetNode<Mana>("Mana");
 
         healthBar.Value = playerHealth.CurrentHealth;
+        Debug.Print(playerHealth.CurrentHealth.ToString());
         manaBar.Value = playerMana.CurrentMana;
 
         playerHealth.HealthChanged += (int health) => {
