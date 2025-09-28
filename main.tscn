@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbu5pvd6vfm28"]
+[gd_scene load_steps=13 format=3 uid="uid://cbu5pvd6vfm28"]
 
-[ext_resource type="PackedScene" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
 [ext_resource type="Script" uid="uid://cpi4veape7d46" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
 
@@ -25,6 +25,27 @@ size = Vector3(200, 1, 200)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
 bg_color = Color(0, 0, 0, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
+bg_color = Color(0.0006938975, 0.0006938978, 0.00069389684, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
+bg_color = Color(1, 0.33625427, 0.33233058, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
+bg_color = Color(0.17940786, 0.44372317, 0.89853305, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="Node3D" type="Node3D"]
 
@@ -71,6 +92,7 @@ text = "Velocity:"
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
 process_mode = 2
+layer = 2
 visible = false
 script = ExtResource("3_h2yge")
 
@@ -116,3 +138,36 @@ offset_bottom = 297.5
 theme_override_font_sizes/font_size = 50
 text = "Paused"
 horizontal_alignment = 1
+
+[node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -107.0
+offset_right = 520.0
+offset_bottom = -67.0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_h2yge")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1bvp3")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="ManaBar" type="ProgressBar" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -57.0
+offset_right = 520.0
+offset_bottom = -17.0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_h2yge")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lquwl")
+step = 1.0
+value = 100.0
+show_percentage = false
