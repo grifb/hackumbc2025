@@ -172,4 +172,13 @@ public partial class Player : CharacterBody3D
             spellLabel.Text += "Right ";
         }
     }
+	public float getMoveSpeed()
+	{
+		return MoveSpeed;
+	}
+
+	public void setMoveSpeed(float newSpeed)
+	{
+		MoveSpeed = newSpeed;
+	}
 }
