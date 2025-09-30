@@ -61,6 +61,32 @@ public partial class SpellManager : Node
 				SpellInput.Up
 			],
 			Spell.Fireball
+		},
+		{
+			[
+				SpellInput.Up,
+				SpellInput.Down,
+				SpellInput.Up,
+				SpellInput.Up,
+
+			],
+			Spell.SuperJump
+		},
+		{
+			[
+				SpellInput.Down,
+				SpellInput.Down,
+
+			],
+				Spell.Shield
+		},
+		{
+			[
+				SpellInput.Left,
+				SpellInput.Left,
+
+			],
+				Spell.Healing
 		}
 	};
 
@@ -119,9 +145,35 @@ public partial class SpellManager : Node
 		fireballSpellActual.setPosition(position);
 		fireballSpellActual.setRotation(direction);
 		fireballSpellActual.Launch(50);
+	}
 
-		
-		
+	public void Shield(Player player)
+	{
+		var shield = GD.Load<PackedScene>("res://shield_spell.tscn");
+		Debug.Print("Shield loaded");
+		Node shield_node = shield.Instantiate();
+		GetTree().Root.AddChild(shield_node);
+
+		Debug.Print("Shield instantiated");
+		Shield shieldActual = (Shield)shield_node;
+		Debug.Print("Shield set");
+		Debug.Print("Shield name: {0}", shieldActual.Name);
+		shieldActual.Cast(player);
+
+	}
+	
+	public void Heal(Player player)
+	{
+		var heal = GD.Load<PackedScene>("res://heal_spell.tscn");
+		Debug.Print("Heal loaded");
+		Node heal_node = heal.Instantiate();
+		GetTree().Root.AddChild(heal_node);
+
+		Debug.Print("Heal instantiated");
+		HealSpell healActual = (HealSpell)heal_node;
+		Debug.Print("Heal set");
+		Debug.Print("Heal name: {0}", healActual.Name);
+		healActual.Cast(player);
 
 	}
 

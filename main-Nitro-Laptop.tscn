@@ -1,0 +1,247 @@
+[gd_scene load_steps=31 format=3 uid="uid://cbu5pvd6vfm28"]
+
+[ext_resource type="PackedScene" uid="uid://d20yvs73esv6w" path="res://player.tscn" id="1_ig7tw"]
+[ext_resource type="Shader" uid="uid://58x1nuavwph6" path="res://floor.tres" id="1_w48qg"]
+[ext_resource type="Script" uid="uid://bx7ei33mx8htb" path="res://scripts/DebugUI.cs" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://cpi4veape7d46" path="res://scripts/PauseMenu.cs" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://c2hle0i30swy7" path="res://addons/proton_scatter/src/scatter.gd" id="4_w48qg"]
+[ext_resource type="Script" uid="uid://d2vbryw2as5he" path="res://addons/proton_scatter/src/stack/modifier_stack.gd" id="5_vivmo"]
+[ext_resource type="Script" uid="uid://blsnmotqaatsd" path="res://addons/proton_scatter/src/modifiers/base_modifier.gd" id="6_2cqfq"]
+[ext_resource type="Script" uid="uid://ci8lww0vafsee" path="res://addons/proton_scatter/src/modifiers/create_inside_random.gd" id="7_yaehf"]
+[ext_resource type="Script" uid="uid://cd2l7lopqmtok" path="res://addons/proton_scatter/src/modifiers/randomize_transforms.gd" id="8_074og"]
+[ext_resource type="Script" uid="uid://7ib4bjetrsai" path="res://addons/proton_scatter/src/modifiers/relax.gd" id="9_cegan"]
+[ext_resource type="Script" uid="uid://bp0sd82ybhvvp" path="res://addons/proton_scatter/src/modifiers/project_on_geometry.gd" id="10_82xsv"]
+[ext_resource type="Script" uid="uid://cb2s3eplg5vje" path="res://addons/proton_scatter/src/scatter_item.gd" id="11_getpj"]
+[ext_resource type="Script" uid="uid://0jo7vwpcnbf7" path="res://addons/proton_scatter/src/scatter_shape.gd" id="12_ryguw"]
+[ext_resource type="Script" uid="uid://c6okhqxhxn44s" path="res://addons/proton_scatter/src/shapes/box_shape.gd" id="13_d13ii"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_7dm0k")
+
+[sub_resource type="Environment" id="Environment_0xm2m"]
+background_mode = 2
+sky = SubResource("Sky_ig7tw")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vivmo"]
+render_priority = 0
+shader = ExtResource("1_w48qg")
+
+[sub_resource type="BoxMesh" id="BoxMesh_7dm0k"]
+material = SubResource("ShaderMaterial_vivmo")
+size = Vector3(800, 1, 800)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ig7tw"]
+size = Vector3(1000, 1, 1000)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
+bg_color = Color(0, 0, 0, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
+bg_color = Color(0.0006938975, 0.0006938978, 0.00069389684, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
+bg_color = Color(1, 0.33625427, 0.33233058, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
+bg_color = Color(0.17940786, 0.44372317, 0.89853305, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Resource" id="Resource_ycdy4"]
+script = ExtResource("7_yaehf")
+amount = 1000000
+override_global_seed = true
+custom_seed = 4
+restrict_height = true
+reference_frame = 1
+
+[sub_resource type="Resource" id="Resource_w48qg"]
+script = ExtResource("8_074og")
+position = Vector3(0.3, 0.15, 0.3)
+rotation = Vector3(3, 0, 3)
+scale = Vector3(0.1, 0.1, 0.1)
+reference_frame = 2
+
+[sub_resource type="Resource" id="Resource_vivmo"]
+script = ExtResource("9_cegan")
+offset_step = 0.2
+consecutive_step_multiplier = 0.75
+restrict_height = true
+
+[sub_resource type="Resource" id="Resource_2cqfq"]
+script = ExtResource("10_82xsv")
+ray_length = 5.0
+ray_offset = 5.0
+remove_points_on_miss = false
+
+[sub_resource type="Resource" id="Resource_yaehf"]
+script = ExtResource("5_vivmo")
+stack = Array[ExtResource("6_2cqfq")]([SubResource("Resource_ycdy4"), SubResource("Resource_w48qg"), SubResource("Resource_vivmo"), SubResource("Resource_2cqfq")])
+
+[sub_resource type="Resource" id="Resource_074og"]
+script = ExtResource("13_d13ii")
+size = Vector3(1, 0.561, 1)
+metadata/_custom_type_script = "uid://c6okhqxhxn44s"
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_0xm2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0005233288, 0, -0.004699588)
+mesh = SubResource("BoxMesh_7dm0k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("BoxShape3D_ig7tw")
+
+[node name="Player" parent="." node_paths=PackedStringArray("pauseMenu") groups=["Player"] instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+pauseMenu = NodePath("../PauseMenu")
+
+[node name="DebugUI" type="CanvasLayer" parent="."]
+layer = 9999
+script = ExtResource("2_0xm2m")
+
+[node name="FPS" type="Label" parent="DebugUI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 119.0
+offset_bottom = 89.0
+theme_override_colors/font_color = Color(0.98835546, 0.14733115, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "FPS:"
+
+[node name="Velocity" type="Label" parent="DebugUI"]
+offset_left = 20.0
+offset_top = 81.0
+offset_right = 119.0
+offset_bottom = 150.0
+theme_override_colors/font_color = Color(0.98835546, 0.14733115, 0, 1)
+theme_override_font_sizes/font_size = 50
+text = "Velocity:"
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 2
+layer = 2
+visible = false
+script = ExtResource("3_h2yge")
+
+[node name="Background" type="Panel" parent="PauseMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0xm2m")
+
+[node name="Menu" type="VBoxContainer" parent="PauseMenu/Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Resume" type="Button" parent="PauseMenu/Background/Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Resume"
+
+[node name="Quit" type="Button" parent="PauseMenu/Background/Menu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Quit"
+
+[node name="Title" type="Label" parent="PauseMenu/Background"]
+layout_mode = 0
+offset_left = 859.5
+offset_top = 228.5
+offset_right = 1060.5
+offset_bottom = 297.5
+theme_override_font_sizes/font_size = 50
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="HUD" type="CanvasLayer" parent="."]
+process_mode = 1
+
+[node name="HealthBar" type="ProgressBar" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -107.0
+offset_right = 520.0
+offset_bottom = -67.0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_h2yge")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1bvp3")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="ManaBar" type="ProgressBar" parent="HUD"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -57.0
+offset_right = 520.0
+offset_bottom = -17.0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_h2yge")
+theme_override_styles/fill = SubResource("StyleBoxFlat_lquwl")
+step = 1.0
+value = 100.0
+show_percentage = false
+
+[node name="ProtonScatter" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("4_w48qg")
+modifier_stack = SubResource("Resource_yaehf")
+Performance/use_chunks = false
+Performance/chunk_dimensions = Vector3(15, 15, 15)
+metadata/_custom_type_script = "uid://c2hle0i30swy7"
+
+[node name="ScatterItem" type="Node3D" parent="ProtonScatter"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.545, 1.176, -0.505)
+script = ExtResource("11_getpj")
+override_cast_shadow = 0
+path = "uid://cwish8eybpaj5"
+metadata/_custom_type_script = "uid://cb2s3eplg5vje"
+
+[node name="ScatterShape" type="Node3D" parent="ProtonScatter"]
+transform = Transform3D(800, 0, 0, 0, 1, 0, 0, 0, 800, 0.00092327595, 0, -0.0027031898)
+script = ExtResource("12_ryguw")
+shape = SubResource("Resource_074og")
+metadata/_custom_type_script = "uid://0jo7vwpcnbf7"
